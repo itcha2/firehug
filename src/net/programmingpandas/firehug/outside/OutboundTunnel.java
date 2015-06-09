@@ -1,5 +1,6 @@
 package net.programmingpandas.firehug.outside;
 
+import static net.programmingpandas.firehug.Main.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,14 +39,15 @@ public class OutboundTunnel implements Runnable{
 		byte[] buffer = new byte[4096]; // buffer of bytes from server
 		byte[] output = new byte[4096]; // string of bytes that will be sent to the client
 		int len = 0;
-		while (true) {
+		while (running) {
 			try {
 				do{
 					buffer[buffer.length] = (byte)in.read();
 				}
-				while(!new String(buffer).contains("HTTP/1.1 200 OK\n"));
+				while(!(new String(buffer).contains(uplinkPrefix) && new String(buffer).contains(uplinkSuffix)));
 				String fr = new String(buffer);
-				fr.replaceAll("HTTP/1.1 200 OK\n", "");
+				fr.replaceAll(uplinkPrefix, "");
+				fr.replaceAll(uplinkSuffix, "");
 				output = new String("GET " + buffer + " HTTP/1.1\n\n").getBytes();
 				out.write(output);
 				buffer = new byte[4096];

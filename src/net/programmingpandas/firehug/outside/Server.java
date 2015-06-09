@@ -1,5 +1,7 @@
 package net.programmingpandas.firehug.outside;
 
+import static net.programmingpandas.firehug.Main.*;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +24,7 @@ public class Server implements Runnable {
 
 	@SuppressWarnings("resource")
 	public void run() {
-		while (true) {
+		while (running) {
 			ServerSocket ss;
 			Socket down = new Socket();
 			Socket up = new Socket();

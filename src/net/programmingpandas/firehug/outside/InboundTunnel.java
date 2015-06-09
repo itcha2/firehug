@@ -1,5 +1,7 @@
 package net.programmingpandas.firehug.outside;
 
+import static net.programmingpandas.firehug.Main.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,10 +41,10 @@ public class InboundTunnel implements Runnable {
 		byte[] buffer = new byte[4096]; //buffer of bytes from client
 		byte[] output = new byte[4096]; //string of bytes that will be sent out
 		int len = 0;
-		while(true){
+		while(running){
 			try{
 			len = in.read(buffer);
-			output = new String("HTTP/1.1 200 OK\n" + buffer).getBytes();
+			output = new String(downlinkPrefix + buffer + downlinkSuffix).getBytes();
 			out.write(output);
 			buffer = new byte[4096];
 			}
