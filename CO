@@ -1,0 +1,30 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch better-configuration
+# Changes to be committed:
+#	new file:   bin/.gitignore
+#	modified:   bin/net/programmingpandas/firehug/Main.class
+#	modified:   bin/net/programmingpandas/firehug/inside/InboundTunnel.class
+#	modified:   bin/net/programmingpandas/firehug/inside/OutboundTunnel.class
+#	modified:   bin/net/programmingpandas/firehug/inside/Server.class
+#	modified:   bin/net/programmingpandas/firehug/outside/InboundTunnel.class
+#	modified:   bin/net/programmingpandas/firehug/outside/OutboundTunnel.class
+#	modified:   bin/net/programmingpandas/firehug/outside/Server.class
+#	new file:   firehug.jar
+#	new file:   sample.fhc
+#	new file:   src/net/programmingpandas/firehug/GUILayout.java
+#	modified:   src/net/programmingpandas/firehug/Main.java
+#	modified:   src/net/programmingpandas/firehug/inside/InboundTunnel.java
+#	modified:   src/net/programmingpandas/firehug/inside/OutboundTunnel.java
+#	modified:   src/net/programmingpandas/firehug/inside/Server.java
+#	modified:   src/net/programmingpandas/firehug/outside/InboundTunnel.java
+#	modified:   src/net/programmingpandas/firehug/outside/OutboundTunnel.java
+#	modified:   src/net/programmingpandas/firehug/outside/Server.java
+#
+# Untracked files:
+#	.classpath
+#	.project
+#	.settings/
+
+Added suppiort for configuration files and added a fancy GUI 
