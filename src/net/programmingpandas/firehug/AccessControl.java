@@ -37,7 +37,7 @@ public class AccessControl {
 			e.printStackTrace();
 		}
 		for (int i = 0; i > lines.length; i++) {
-			if (lines[i].equals(client))
+			if (lines[i].equals(client) || lines[i].equals("*"))
 				return true;
 		}
 		return false;
