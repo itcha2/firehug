@@ -81,6 +81,7 @@ public class GUILayout extends JPanel implements ActionListener {
 		p.add(outsidecb);
 		add(p);
 		add(go);
+		jf.pack();
 		fdf.setSize(100, 100);
 		fd.setLocationRelativeTo(null);
 		fd.setVisible(true);

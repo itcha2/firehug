@@ -32,7 +32,9 @@ public class Server implements Runnable {
 		while (running) {
 			try {
 				down = ss.accept();
+				System.out.println("Client connected: " + down.getInetAddress().getHostAddress());
 				if (!checkAccess(down, "ACCESS")){
+					System.out.println("Client rejected: " + down.getInetAddress().getHostAddress());
 					down.close();
 					continue;
 				}
@@ -40,6 +42,7 @@ public class Server implements Runnable {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				continue;
 			}
 			new OutboundTunnel(down, up);
 			new InboundTunnel(down, up);
