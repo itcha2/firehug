@@ -1,5 +1,7 @@
 package net.programmingpandas.firehug.inside;
+
 import static net.programmingpandas.firehug.Main.*;
+import static net.programmingpandas.firehug.AccessControl.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,19 +20,29 @@ public class Server implements Runnable {
 		this.uplinkPort = uplinkPort;
 	}
 
-	@SuppressWarnings("resource")
 	public void run() {
+		Socket down = null;
+		Socket up = null;
+		ServerSocket ss = null;
+		try {
+			ss = new ServerSocket(downlinkPort);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		while (running) {
-			ServerSocket ss;
-			Socket down = new Socket();
-			Socket up = new Socket();
 			try {
-				ss = new ServerSocket(downlinkPort);
 				down = ss.accept();
+				System.out.println("Client connected: " + down.getInetAddress().getHostAddress());
+				if (!checkAccess(down, "ACCESS")){
+					System.out.println("Client rejected: " + down.getInetAddress().getHostAddress());
+					down.close();
+					continue;
+				}
 				up = new Socket(target, uplinkPort);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				continue;
 			}
 			new OutboundTunnel(down, up);
 			new InboundTunnel(down, up);

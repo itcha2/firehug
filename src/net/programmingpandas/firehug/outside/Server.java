@@ -31,10 +31,12 @@ public class Server implements Runnable {
 			try {
 				ss = new ServerSocket(downlinkPort);
 				down = ss.accept();
+				System.out.println("Client connected: " + down.getInetAddress().getHostAddress());
 				up = new Socket(target, uplinkPort);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				continue;
 			}
 			new OutboundTunnel(down, up);
 			new InboundTunnel(down, up);

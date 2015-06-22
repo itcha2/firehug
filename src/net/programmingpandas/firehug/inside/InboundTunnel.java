@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
+
 import static net.programmingpandas.firehug.Main.*;
 
 public class InboundTunnel implements Runnable {
@@ -16,12 +18,14 @@ public class InboundTunnel implements Runnable {
 		try {
 			this.out = back.getOutputStream();
 			this.in = forward.getInputStream();
+			thread = new Thread(this);
+			thread.start();
+		} catch (SocketException e) {
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		thread = new Thread(this);
-		thread.start();
 	}
 
 	public InboundTunnel(InputStream in, OutputStream out) {
@@ -37,21 +41,24 @@ public class InboundTunnel implements Runnable {
  */
 	public void run() {
 		byte[] buffer = new byte[4096]; // buffer of bytes from server
-		byte[] output = new byte[4096]; // string of bytes that will be sent to the client
+		byte[] output = new byte[4096]; // string of bytes that will be sent to
+										// the client
 		@SuppressWarnings("unused")
 		int len = 0;
 		while (running) {
 			try {
-				do{
-					buffer[buffer.length] = (byte)in.read();
-				}
-				while(!(new String(buffer).contains(downlinkPrefix) && new String(buffer).contains(downlinkSuffix)));
+				do {
+					buffer[buffer.length] = (byte) in.read();
+				} while (!(new String(buffer).contains(downlinkPrefix) && new String(
+						buffer).contains(downlinkSuffix)));
 				String fr = new String(buffer);
 				fr.replaceAll(downlinkPrefix, "");
 				fr.replaceAll(downlinkSuffix, "");
 				output = fr.getBytes();
 				out.write(output);
 				buffer = new byte[4096];
+			} catch (SocketException e) {
+				break;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
