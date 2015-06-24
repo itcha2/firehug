@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+import net.programmingpandas.firehug.ByteSearch;
+
 public class OutboundTunnel implements Runnable {
 
 	InputStream in;
@@ -48,13 +50,12 @@ public class OutboundTunnel implements Runnable {
 			try {
 				do {
 					buffer[buffer.length] = (byte) in.read();
-				} while (!(new String(buffer).contains(uplinkPrefix) && new String(
+				} while (!(new ByteSearch(buffer).contains(uplinkPrefix) && new ByteSearch(
 						buffer).contains(uplinkSuffix)));
-				String fr = new String(buffer);
-				fr.replaceAll(uplinkPrefix, "");
-				fr.replaceAll(uplinkSuffix, "");
-				output = new String("GET " + buffer + " HTTP/1.1\n\n")
-						.getBytes();
+				ByteSearch fr = new ByteSearch(buffer);
+				fr.removePattern(uplinkPrefix);
+				fr.removePattern(uplinkSuffix);
+				output = fr.get();
 				out.write(output);
 				buffer = new byte[4096];
 			} catch (SocketException e) {
