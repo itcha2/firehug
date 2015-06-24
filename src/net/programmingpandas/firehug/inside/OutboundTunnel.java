@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+import net.programmingpandas.firehug.ByteSearch;
+
 public class OutboundTunnel implements Runnable {
 
 	InputStream in;
@@ -40,16 +42,17 @@ public class OutboundTunnel implements Runnable {
  * 
  */
 	public void run() {
-		byte[] buffer = new byte[4096]; // buffer of bytes from client
-		byte[] output = new byte[4096]; // string of bytes that will be sent out
+		byte[] buffer = new byte[8192]; // buffer of bytes from client
+		ByteSearch output = new ByteSearch(); // string of bytes that will be sent out
 		int len = 0;
 		while (running) {
 			try {
 				len = in.read(buffer);
-				output = new String(uplinkPrefix + buffer + uplinkSuffix)
-						.getBytes();
-				out.write(output);
-				buffer = new byte[4096];
+				output.set(uplinkPrefix.getBytes());
+				output.appendPattern(buffer);
+				output.appendPattern(uplinkSuffix.getBytes()).
+				out.write(output.get);
+				buffer = new byte[8192];
 			} catch (SocketException e) {
 					break;
 			} catch (IOException e) {
