@@ -55,4 +55,25 @@ public class ByteSearch {
         }
         b = newb;
     }
+    
+    public boolean contains(byte[] pattern) {
+        
+        int y;
+        
+        if (b == null || !b.length > 0) {
+            return;
+        }
+        
+        biterate: for(int x = 0; x < b.length; x++){
+            if (b[x] == pattern[0]){
+                patterniterate: for (y = 0; y < pattern.length; y++){
+                    if(b[x+y] != pattern[y]){
+                        continue biterate;
+                    }
+                }
+              return true;
+            }
+        }
+        return false;
+    }
 }
