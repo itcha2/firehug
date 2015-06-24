@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+import net.programmingpandas.firehug.ByteSearch;
+
 import static net.programmingpandas.firehug.Main.*;
 
 public class InboundTunnel implements Runnable {
@@ -49,12 +51,12 @@ public class InboundTunnel implements Runnable {
 			try {
 				do {
 					buffer[buffer.length] = (byte) in.read();
-				} while (!(new String(buffer).contains(downlinkPrefix) && new String(
+				} while (!(new ByteSearch(buffer).contains(downlinkPrefix) && new ByteSearch(
 						buffer).contains(downlinkSuffix)));
-				String fr = new String(buffer);
-				fr.replaceAll(downlinkPrefix, "");
-				fr.replaceAll(downlinkSuffix, "");
-				output = fr.getBytes();
+				ByteSearch fr = new ByteSearch(buffer);
+				fr.removePattern(downlinkPrefix);
+				fr.removePattern(downlinkSuffix, "");
+				output = fr.get();
 				out.write(output);
 				buffer = new byte[4096];
 			} catch (SocketException e) {
