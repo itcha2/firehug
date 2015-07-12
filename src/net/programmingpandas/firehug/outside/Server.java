@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import net.programmingpandas.firehug.inside.InboundTunnel;
-import net.programmingpandas.firehug.inside.OutboundTunnel;
+import net.programmingpandas.firehug.outside.InboundTunnel;
+import net.programmingpandas.firehug.outside.OutboundTunnel;
 
 public class Server implements Runnable {
 
