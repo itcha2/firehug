@@ -37,9 +37,11 @@ public class Main {
 			char[] contents;
 			contents = new char[5000];
 			fr.read(contents);
-			String[] lines = new String(contents).split("\n");
+			String[] lines = new String(contents).replaceAll("\r", "").split("\n");
 			for(int i = 0; i < lines.length; i++){
-			lines[i].replaceAll("\\n", "\n");
+			//lines[i].replaceAll("\n", "");
+			//lines[i].replaceAll("\\n", "\n");
+			System.out.println(lines[i]);
 			}
 			uplinkPrefix = lines[0];
 			uplinkSuffix = lines[1];
